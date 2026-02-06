@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <title>Be My Valentine 💖</title>
+
+  <!--
+    👀 Hey you...
+    Yes, YOU inspecting the code.
+    If you’re reading this, just know:
+    You are deeply loved, chosen every day,
+    and this was made only for you, Mighty Munch ❤️
+  -->
+
   <style>
     body {
       margin: 0;
@@ -12,6 +21,7 @@
       align-items: center;
       justify-content: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
     }
 
     .card {
@@ -20,7 +30,9 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      max-width: 400px;
+      max-width: 420px;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -43,55 +55,126 @@
       50% { transform: scale(1.2); }
     }
 
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
     button {
-      margin-top: 20px;
       padding: 12px 25px;
       font-size: 1em;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      background: #ff4d6d;
-      color: white;
       transition: 0.3s;
     }
 
-    button:hover {
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #yesBtn:hover {
       background: #e63950;
     }
 
+    #noBtn {
+      background: #ddd;
+      color: #333;
+      position: absolute;
+    }
+
     #response {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 1.2em;
       color: #ff4d6d;
       display: none;
+    }
+
+    /* 💕 Heart Rain */
+    .falling-heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
+  <div class="card" id="card">
     <div class="heart">❤️</div>
     <h1>Tintswalo 💕</h1>
     <p>
       My Mighty Munch 🥹<br><br>
       You make my days brighter, my laughs louder, and my heart fuller.
     </p>
-    <p>
-      So I coded this just to ask…
-    </p>
+
     <h2>Will you be my Valentine? 🌹</h2>
 
-    <button onclick="sayYes()">YES 💖</button>
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">YES 💖</button>
+      <button id="noBtn" onmouseover="moveNo()">NO 😅</button>
+    </div>
 
     <div id="response">
-      YAY!!! 🥰💘  
-      I choose you. Always.  
+      YAY!!! 🥰💘<br>
+      I choose you. Always.
     </div>
   </div>
+
+  <!-- 🎶 Background Music (plays after YES) -->
+  <audio id="loveSong" loop>
+    <!-- Replace src with your uploaded MP3 file -->
+    <source src="a-couple-minutes.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     function sayYes() {
       document.getElementById("response").style.display = "block";
+      document.getElementById("loveSong").play();
+      startHeartRain();
+    }
+
+    function moveNo() {
+      const card = document.getElementById("card");
+      const noBtn = document.getElementById("noBtn");
+
+      const cardRect = card.getBoundingClientRect();
+      const maxX = cardRect.width - noBtn.offsetWidth;
+      const maxY = cardRect.height - noBtn.offsetHeight;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    }
+
+    function startHeartRain() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "falling-heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 300);
     }
   </script>
 
