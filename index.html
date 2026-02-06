@@ -3,15 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Be My Valentine 💖</title>
-
-  <!--
-    👀 Hey you...
-    Yes, YOU inspecting the code.
-    If you’re reading this, just know:
-    You are deeply loved, chosen every day,
-    and this was made only for you, Mighty Munch ❤️
-  -->
-
   <style>
     body {
       margin: 0;
@@ -32,7 +23,6 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       max-width: 420px;
       position: relative;
-      z-index: 2;
     }
 
     h1 {
@@ -60,7 +50,6 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      position: relative;
     }
 
     button {
@@ -93,22 +82,6 @@
       color: #ff4d6d;
       display: none;
     }
-
-    /* 💕 Heart Rain */
-    .falling-heart {
-      position: fixed;
-      top: -10px;
-      font-size: 20px;
-      animation: fall linear forwards;
-      z-index: 1;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -120,6 +93,7 @@
       My Mighty Munch 🥹<br><br>
       You make my days brighter, my laughs louder, and my heart fuller.
     </p>
+    <p>So I coded this just to ask…</p>
 
     <h2>Will you be my Valentine? 🌹</h2>
 
@@ -134,17 +108,9 @@
     </div>
   </div>
 
-  <!-- 🎶 Background Music (plays after YES) -->
-  <audio id="loveSong" loop>
-    <!-- Replace src with your uploaded MP3 file -->
-    <source src="a-couple-minutes.mp3" type="audio/mpeg">
-  </audio>
-
   <script>
     function sayYes() {
       document.getElementById("response").style.display = "block";
-      document.getElementById("loveSong").play();
-      startHeartRain();
     }
 
     function moveNo() {
@@ -152,6 +118,7 @@
       const noBtn = document.getElementById("noBtn");
 
       const cardRect = card.getBoundingClientRect();
+
       const maxX = cardRect.width - noBtn.offsetWidth;
       const maxY = cardRect.height - noBtn.offsetHeight;
 
@@ -160,21 +127,6 @@
 
       noBtn.style.left = randomX + "px";
       noBtn.style.top = randomY + "px";
-    }
-
-    function startHeartRain() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "falling-heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 5000);
-      }, 300);
     }
   </script>
 
